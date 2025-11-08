@@ -1,34 +1,17 @@
 package com.example.unitconverterusingjetpack
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlin.math.roundToInt
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -36,18 +19,23 @@ fun UnitConvertUI() {
     var inputValue by remember { mutableStateOf("") }
     var outputValue by remember { mutableStateOf("") }
 
-    var inputUnit by remember { mutableStateOf("Input") }
-    var outputUnit by remember { mutableStateOf("Output") }
+    var inputUnit by remember { mutableStateOf("Select Unit") }
+    var outputUnit by remember { mutableStateOf("Select Unit") }
 
     var isInputExpanded by remember { mutableStateOf(false) }
     var isOutputExpanded by remember { mutableStateOf(false) }
+
     var inputConversionFactor by remember { mutableStateOf(1.0) }
     var outputConversionFactor by remember { mutableStateOf(1.0) }
 
     fun convertUnits() {
-        val input = inputValue.toDoubleOrNull() ?: 0.0
-        val result = ((input * inputConversionFactor / outputConversionFactor) * 100).roundToInt() / 100.0
-        outputValue = result.toString()
+        val input = inputValue.toDoubleOrNull()
+        if (input != null && inputUnit != "Select Unit" && outputUnit != "Select Unit") {
+            val result = (input * inputConversionFactor / outputConversionFactor)
+            outputValue = "%.2f".format(result)
+        } else {
+            outputValue = ""
+        }
     }
 
     Column(
@@ -64,12 +52,13 @@ fun UnitConvertUI() {
             )
         )
 
-        Spacer(modifier = Modifier.padding(32.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         OutlinedTextField(
             value = inputValue,
             onValueChange = {
                 inputValue = it
+                convertUnits()
             },
             label = { Text(text = "Enter the Value") },
             modifier = Modifier
@@ -77,7 +66,7 @@ fun UnitConvertUI() {
                 .padding(8.dp)
         )
 
-        Spacer(modifier = Modifier.padding(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -94,7 +83,7 @@ fun UnitConvertUI() {
                 }
             )
 
-            Spacer(modifier = Modifier.padding(16.dp))
+            Spacer(modifier = Modifier.width(16.dp))
 
             DropdownButton(
                 label = outputUnit,
@@ -108,10 +97,10 @@ fun UnitConvertUI() {
             )
         }
 
-        Spacer(modifier = Modifier.padding(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Result: $outputValue $outputUnit",
+            text = if (outputValue.isNotEmpty()) "Result: $outputValue $outputUnit" else "",
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold
             )
@@ -138,12 +127,12 @@ fun DropdownButton(
 
         DropdownMenu(expanded = expended, onDismissRequest = { onExpandedChange(false) }) {
             listOf(
-                "Centimeters" to 0.01,
+                "Millimeter" to 0.001,
+                "Centimeter" to 0.01,
                 "Meter" to 1.0,
-                "Foot" to 0.3048,
-                "Inch" to 0.0254,
                 "Kilometer" to 1000.0,
-                "Millimeters" to 0.001,
+                "Inch" to 0.0254,
+                "Foot" to 0.3048
             ).forEach { (unit, factor) ->
                 DropdownMenuItem(
                     text = { Text(unit) },
