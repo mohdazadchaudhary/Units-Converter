@@ -11,21 +11,6 @@ Compose-native Splash Screen (customizable)
 Modular code structure for easy extension
 No runtime-heavy dependencies — fast cold start
 
-📦 Repo Structure (high level)
-app/
- ├─ src/main/java/com/example/unitconverterusingjetpack/
- │   ├─ MainActivity.kt
- │   ├─ SplashScreen.kt
- │   ├─ ui/
- │   │   ├─ theme/                # Theme & styling (Material3)
- │   │   └─ components/           # Reusable composables
- │   └─ features/                 # Conversion logic & screens
- ├─ res/
- │   ├─ drawable/                 # logos, pngs & vectors
- │   ├─ layout/
- │   └─ values/
- └─ build.gradle
-
 🛠️ Tech Stack
 
 Language: Kotlin
