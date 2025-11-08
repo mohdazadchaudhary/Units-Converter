@@ -37,7 +37,7 @@ Optional: androidx.core:core-splashscreen for Android 12+ control (recommended b
 
 Clone the repo:
 
-git clone https://github.com/mohdazadchaudhary/UnitConverterUsingJetpack.git
+git clone https://github.com/mohdazadchaudhary/Units-Converter.git
 cd UnitConverterUsingJetpack
 
 Open the project in Android Studio.
