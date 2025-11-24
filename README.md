@@ -88,11 +88,6 @@ Make changes and add tests where appropriate.
 Submit a PR with a clear description and changelog.
 Coding standards: consistent Kotlin style, simple functions, clear naming, small commits.
 
-📝 License
-
-This project is available under the MIT License — feel free to reuse and adapt.
-(Replace this with your preferred license if needed.)
-
 👤 Author
 
 Mohd Azad Chaudhary
